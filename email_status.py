@@ -3,8 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import calendar
 import datetime
+
+
 def month_num_to_name(month_num):
     return calendar.month_name[month_num]
+
 
 # Load the data
 df = pd.read_csv('email_status.csv')
@@ -107,7 +110,8 @@ if not df_grouped.empty:
     ax_pie.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     # Calculate monthly totals from the start of the selected year to date
-    df_monthly_totals = df[df['Year'] == selected_year].groupby(df['Date'].dt.month).agg({'Email Count': 'sum'}).reset_index()
+    df_monthly_totals = df[df['Year'] == selected_year].groupby(df['Date'].dt.month).agg(
+        {'Email Count': 'sum'}).reset_index()
     df_monthly_totals['Month'] = df_monthly_totals['Date'].apply(month_num_to_name)  # Convert month numbers to names
 
     # Calculate the cumulative sum for the 'Email Count' column
@@ -122,7 +126,7 @@ if not df_grouped.empty:
 
     # Arrange YTD table, pie chart side by side
     # Setting the middle column to be wider than the other two
-    col1, col2= st.columns([2, 2,])
+    col1, col2 = st.columns([2, 2, ])
 
     # Show the YTD table in Streamlit
     col1.subheader(f'Year-to-Date Totals for {selected_year}')
